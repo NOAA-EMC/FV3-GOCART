@@ -29,6 +29,7 @@ set(OPENMP          ON  CACHE BOOL "Enable OpenMP threading")
 set(PARALLEL_NETCDF OFF CACHE BOOL "Enable parallel NetCDF")
 set(QUAD_PRECISION  ON  CACHE BOOL "Enable QUAD_PRECISION (for certain grid metric terms in dycore)")
 set(REPRO           OFF CACHE BOOL "Enable REPRO mode")
+set(GOCART          OFF CACHE BOOL "Enable GOCART")
 set(WW3             OFF CACHE BOOL "Enable WW3")
 
 if(CMAKE_Platform)
@@ -55,6 +56,7 @@ message("PARALLEL_NETCDF .. ${PARALLEL_NETCDF}")
 message("QUAD_PRECISION ... ${QUAD_PRECISION}")
 message("REPRO ............ ${REPRO}")
 message("WW3 .............. ${WW3}")
+message("GOCART ........... ${GOCART}")
 message("")
 
 get_filename_component (C_COMPILER_NAME ${CMAKE_C_COMPILER} NAME)
@@ -146,6 +148,16 @@ add_subdirectory(stochastic_physics)
 add_subdirectory(FV3)
 
 ###############################################################################
+### GOCART
+###############################################################################
+if(GOCART)
+  set(BUILD_UFS ON)
+  include (ecbuild_system NO_POLICY_SCOPE)
+  add_subdirectory(GOCART)
+endif()
+
+
+###############################################################################
 ### WW3
 ###############################################################################
 if(WW3)
@@ -204,6 +216,12 @@ list(APPEND _ufs_defs_private ESMF_VERSION_MAJOR=${ESMF_VERSION_MAJOR}
 
 set_target_properties(ufs PROPERTIES Fortran_MODULE_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/mod)
 target_include_directories(ufs PRIVATE ${CMAKE_CURRENT_BINARY_DIR}/NEMS/src)
+
+if(GOCART)
+  list(APPEND _ufs_defs_private FRONT_GSDCHEM=Aerosol_Cap)
+  add_dependencies(ufs UFS)
+  target_link_libraries(ufs PUBLIC UFS)
+endif()
 
 if(WW3)
   list(APPEND _ufs_defs_private FRONT_WW3=WMESMFMD)

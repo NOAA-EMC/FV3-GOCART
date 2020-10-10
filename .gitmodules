@@ -18,3 +18,7 @@
   path = stochastic_physics
   url = https://github.com/noaa-psd/stochastic_physics
   branch = master
+[submodule "GOCART"]
+	path = GOCART
+	url = https://github.com/GEOS-ESM/GOCART.git
+	branch = feature/ufs
