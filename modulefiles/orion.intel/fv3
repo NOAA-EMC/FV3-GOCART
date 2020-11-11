@@ -39,3 +39,22 @@ module load nemsio/2.5.2
 module load sp/2.3.3
 module load w3emc/2.7.3
 module load w3nco/2.4.1
+
+# GOCART settings
+module use /work/noaa/nems/rmontuor/apps/ufs/libs/modulefiles/stack
+
+module load hpc/1.0.1-nasa
+module load hpc-intel/2018.4
+module load hpc-impi/2018.4
+
+module load ecbuild
+module load esma_cmake
+module load cmakemodules
+module load gftl-shared
+module load flap
+module load pflogger
+module load pfunit
+module load yafyaml
+module load mapl/dev
+
+module load python/3.7.5

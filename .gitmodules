@@ -4,8 +4,8 @@
   branch = feature/ufs_gocart
 [submodule "NEMS"]
   path = NEMS
-  url = https://github.com/NOAA-EMC/NEMS
-  branch = develop
+  url = https://github.com/rmontuoro/NEMS
+  branch = feature/ufs_gocart
 [submodule "FMS"]
   path = FMS
   url = https://github.com/NOAA-GFDL/FMS
@@ -38,3 +38,7 @@
   path = DATM
   url = https://github.com/NOAA-EMC/NEMSdatm
   branch = develop
+[submodule "GOCART"]
+  path = GOCART
+  url = https://github.com/GEOS-ESM/GOCART
+  branch = feature/ufs

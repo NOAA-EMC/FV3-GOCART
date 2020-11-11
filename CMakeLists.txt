@@ -30,6 +30,7 @@ set(OPENMP          ON  CACHE BOOL "Enable OpenMP threading")
 set(PARALLEL_NETCDF OFF CACHE BOOL "Enable parallel NetCDF")
 set(QUAD_PRECISION  ON  CACHE BOOL "Enable QUAD_PRECISION (for certain grid metric terms in dycore)")
 set(REPRO           OFF CACHE BOOL "Enable REPRO mode")
+set(GOCART          OFF CACHE BOOL "Enable GOCART")
 set(WW3             OFF CACHE BOOL "Enable WW3")
 set(S2S             OFF CACHE BOOL "Enable S2S")
 set(DATM            OFF CACHE BOOL "Enable Data Atmosphere")
@@ -64,6 +65,7 @@ message("OPENMP ........... ${OPENMP}")
 message("PARALLEL_NETCDF .. ${PARALLEL_NETCDF}")
 message("QUAD_PRECISION ... ${QUAD_PRECISION}")
 message("REPRO ............ ${REPRO}")
+message("GOCART ........... ${GOCART}")
 message("WW3 .............. ${WW3}")
 message("S2S .............. ${S2S}")
 message("DATM ............. ${DATM}")
@@ -181,6 +183,15 @@ else()
 endif()
 
 ###############################################################################
+### GOCART
+###############################################################################
+if(GOCART)
+  set(BUILD_UFS ON)
+  include (ecbuild_system NO_POLICY_SCOPE)
+  add_subdirectory(GOCART)
+endif()
+
+###############################################################################
 ### WW3
 ###############################################################################
 if(WW3)
@@ -262,6 +273,12 @@ endif()
 
 set_target_properties(ufs PROPERTIES Fortran_MODULE_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/mod)
 target_include_directories(ufs PRIVATE ${CMAKE_CURRENT_BINARY_DIR}/NEMS/src)
+
+if(GOCART)
+  list(APPEND _ufs_defs_private FRONT_GSDCHEM=Aerosol_Cap)
+  add_dependencies(ufs UFS)
+  target_link_libraries(ufs PUBLIC UFS)
+endif()
 
 if(WW3)
   list(APPEND _ufs_defs_private FRONT_WW3=WMESMFMD)
