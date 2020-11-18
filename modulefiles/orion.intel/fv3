@@ -51,7 +51,6 @@ module load ecbuild
 module load esma_cmake
 module load cmakemodules
 module load gftl-shared
-module load flap
 module load pflogger
 module load pfunit
 module load yafyaml
