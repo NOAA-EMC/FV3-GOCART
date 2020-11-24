@@ -31,6 +31,7 @@ set(PARALLEL_NETCDF OFF CACHE BOOL "Enable parallel NetCDF")
 set(QUAD_PRECISION  ON  CACHE BOOL "Enable QUAD_PRECISION (for certain grid metric terms in dycore)")
 set(REPRO           OFF CACHE BOOL "Enable REPRO mode")
 set(GOCART          OFF CACHE BOOL "Enable GOCART")
+set(GSDCHEM         OFF CACHE BOOL "Enable GSDCHEM")
 set(WW3             OFF CACHE BOOL "Enable WW3")
 set(S2S             OFF CACHE BOOL "Enable S2S")
 set(DATM            OFF CACHE BOOL "Enable Data Atmosphere")
@@ -66,10 +67,15 @@ message("PARALLEL_NETCDF .. ${PARALLEL_NETCDF}")
 message("QUAD_PRECISION ... ${QUAD_PRECISION}")
 message("REPRO ............ ${REPRO}")
 message("GOCART ........... ${GOCART}")
+message("GSDCHEM .......... ${GSDCHEM}")
 message("WW3 .............. ${WW3}")
 message("S2S .............. ${S2S}")
 message("DATM ............. ${DATM}")
 message("")
+
+if (GOCART AND GSDCHEM)
+  message(FATAL_ERROR "Please specify only one aerosol component - either GOCART or GSDCHEM")
+endif()
 
 get_filename_component (C_COMPILER_NAME ${CMAKE_C_COMPILER} NAME)
 get_filename_component (CXX_COMPILER_NAME ${CMAKE_CXX_COMPILER} NAME)
@@ -192,6 +198,29 @@ if(GOCART)
 endif()
 
 ###############################################################################
+### GSDCHEM
+###############################################################################
+if(GSDCHEM)
+  include(ExternalProject)
+  find_program(MAKE_EXE NAMES gmake make)
+  if(DEBUG)
+    set(_libgsdchem_options "--enable-debug")
+  endif()
+  ExternalProject_Add(libgsdchem
+    SOURCE_DIR        ${CMAKE_CURRENT_SOURCE_DIR}/GSDCHEM
+    CONFIGURE_COMMAND ${CMAKE_CURRENT_SOURCE_DIR}/GSDCHEM/configure --prefix=${CMAKE_CURRENT_BINARY_DIR}/GSDCHEM FC=${CMAKE_Fortran_COMPILER} ${_libgsdchem_options}
+    BUILD_ALWAYS      ON
+    BUILD_IN_SOURCE   ON
+    LOG_CONFIGURE     ON
+    LOG_BUILD         ON
+    )
+  add_library(UFS STATIC IMPORTED GLOBAL)
+  add_dependencies(UFS libgsdchem)
+  set_target_properties(UFS PROPERTIES IMPORTED_LOCATION ${CMAKE_CURRENT_BINARY_DIR}/GSDCHEM/lib/libgsdchem.a)
+  set_target_properties(UFS PROPERTIES INTERFACE_INCLUDE_DIRECTORIES ${CMAKE_CURRENT_SOURCE_DIR}/GSDCHEM/src/chem)
+endif()
+
+###############################################################################
 ### WW3
 ###############################################################################
 if(WW3)
@@ -276,6 +305,12 @@ target_include_directories(ufs PRIVATE ${CMAKE_CURRENT_BINARY_DIR}/NEMS/src)
 
 if(GOCART)
   list(APPEND _ufs_defs_private FRONT_GSDCHEM=Aerosol_Cap)
+  add_dependencies(ufs UFS)
+  target_link_libraries(ufs PUBLIC UFS)
+endif()
+
+if(GSDCHEM)
+  list(APPEND _ufs_defs_private FRONT_GSDCHEM=CHM)
   add_dependencies(ufs UFS)
   target_link_libraries(ufs PUBLIC UFS)
 endif()

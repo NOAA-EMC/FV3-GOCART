@@ -42,3 +42,6 @@
   path = GOCART
   url = https://github.com/GEOS-ESM/GOCART
   branch = feature/ufs
+[submodule "GSDCHEM"]
+	path = GSDCHEM
+	url = gerrit:GSDCHEM
