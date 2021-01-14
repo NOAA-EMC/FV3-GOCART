@@ -9,7 +9,6 @@ module-whatis "loads UFS Model prerequisites for Hera/Intel"
 module use /contrib/sutils/modulefiles
 module load sutils
 
-module load cmake/3.16.1
 setenv CMAKE_C_COMPILER mpiicc
 setenv CMAKE_CXX_COMPILER mpiicpc
 setenv CMAKE_Fortran_COMPILER mpiifort
@@ -40,3 +39,22 @@ module load nemsio/2.5.2
 module load sp/2.3.3
 module load w3emc/2.7.3
 module load w3nco/2.4.1
+
+# GOCART settings
+module use /scratch1/NCEPDEV/nems/Raffaele.Montuoro/dev/nasa/libs/hpc-stack/1.1.0-nasa/modulefiles/stack
+
+module load hpc/1.1.0-nasa
+module load hpc-intel/18.0.5.274
+module load hpc-impi/2018.0.4
+
+module load cmake
+module load ecbuild
+module load esma_cmake
+module load cmakemodules
+module load gftl-shared
+module load pflogger
+module load pfunit
+module load yafyaml
+module load mapl
+
+module load intelpython/3.6.8
