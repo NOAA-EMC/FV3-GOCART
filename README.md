@@ -1,12 +1,14 @@
 [![Read The Docs Status](https://readthedocs.org/projects/ufs-weather-model/badge/?badge=latest)](http://ufs-weather-model.readthedocs.io/)
 
-# ufs-weather-model
+# UFS-GOCART
 
-This is the UFS weather model source code.
+UFS coupled application integrating prognostic aerosols with the UFS weather model using
+NASA 2nd generation Goddard Chemistry Aerosol Radiation and Transport (GOCART) model.
 
 # Where to find information
 
-Start at the [wiki](https://github.com/ufs-community/ufs-weather-model/wiki) which has quick start instructions.
+Quick start instructions for the UFS weather model are available
+at the [wiki](https://github.com/ufs-community/ufs-weather-model/wiki).
 
 [User's reference guide](http://ufs-weather-model.readthedocs.io/) is hosted on read the docs.
 
@@ -23,6 +25,7 @@ The top level directory structure groups source code and input files as follow:
 | ```CMEPS-interface/```    | Contains CMEPS mediator |
 | ```FV3/```                | Contains FV3 atmosphere model component including FV3 dynamical core, dynamics to physics driver, physics and IO. |
 | ```DATM/```               | Contains Data Atmosphere model component |
+| ```GOCART/```             | Contains Aerosols component based on NASA GOCART |
 | ```WW3/```                | Contains community wave modeling framework WW3. |
 | ```MOM6-interface/```     | Contains MOM6 ocean model component |
 | ```CICE-interface/```     | Contains CICE sea-ice model component including CICE6 and Icepack |
@@ -32,9 +35,13 @@ The top level directory structure groups source code and input files as follow:
 | ```tests/```              | Regression and unit testing framework scripts. |
 | ```build.sh```            | Script to build the model executable. (also used by `tests/`) |
 
-E.g. use of `build.sh` to build the coupled model with `FV3_GFS_v15p2` as the CCPP suite.
+To build UFS-GOCART, load the machine-specific `fv3` module file provided in the
+`modulefiles/` directory, then run `./build.sh`. E.g.:
+
 ```
-$> CMAKE_FLAGS="-DS2S=ON" CCPP_SUITES="FV3_GFS_v15p2" ./build.sh
+module use modulefiles/hera.intel
+module load fv3
+./build.sh
 ```
 
 # Disclaimer
