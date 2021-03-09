@@ -1,12 +1,14 @@
 [![Read The Docs Status](https://readthedocs.org/projects/ufs-weather-model/badge/?badge=latest)](http://ufs-weather-model.readthedocs.io/)
 
-# ufs-weather-model
+# UFS-GOCART
 
-This is the UFS weather model code.
+UFS coupled application integrating prognostic aerosols with the UFS weather model using
+NASA 2nd generation Goddard Chemistry Aerosol Radiation and Transport (GOCART) model.
 
 # Where to find information
 
-Start at the [ufs-weather-model wiki](https://github.com/ufs-community/ufs-weather-model/wiki) which has quick start instructions.
+Quick start instructions for the UFS weather model are available
+at the [wiki](https://github.com/ufs-community/ufs-weather-model/wiki).
 
 [User's reference guide](http://ufs-weather-model.readthedocs.io/) is hosted on read the docs.
 
@@ -14,21 +16,33 @@ Start at the [ufs-weather-model wiki](https://github.com/ufs-community/ufs-weath
 
 The top level directory structure groups source code and input files as follow:
 
-| File/directory    | Purpose |
-| --------------    | ------- |
-| ```LICENSE.md```  | A copy of the Gnu lesser general public license, version 3. |
-| ```README.md```   | This file with basic pointers to more information. |
-| ```FMS/```        | Contains Flexible Modeling System source code. |
-| ```NEMS/```       | Contains NOAA Environmental Modeling System source code and nems compset runi scripts. |
-| ```FV3/```        | Contains FV3 atmosphere model component including fv3 dynamics core, dynsmics to physics driver, physics and io. |
-| ```WW3/```        | Contains community wave modeling framework WW3. |
-| ```stochastic physics/``` | Contains the stochastic physics source code. |
-| ```conf/```       | Contains compile option files on various platforms. |
-| ```compsets/```   | Contains NEMSCompsetRun regression test compset information. |
-| ```log/```        | Contains log files from NEMSCompsetRun regression test.|
-| ```modulefiles/``` | Contains module files on various platforms.|
-| ```parm/```       | Contains model configuration and namelist templates.|
-| ```doc/```        | Workspace for documentation. |
+| File/directory            | Purpose |
+| --------------            | ------- |
+| ```LICENSE.md```          | A copy of the GNU Lesser General Public License, Version 3. |
+| ```README.md```           | This file with basic pointers to more information. |
+| ```FMS/```                | Contains Flexible Modeling System source code. |
+| ```NEMS/```               | Contains NOAA Environmental Modeling System source code and nems compset run scripts. |
+| ```CMEPS-interface/```    | Contains CMEPS mediator |
+| ```FV3/```                | Contains FV3 atmosphere model component including FV3 dynamical core, dynamics to physics driver, physics and IO. |
+| ```DATM/```               | Contains Data Atmosphere model component |
+| ```GOCART/```             | Contains Aerosols component based on NASA GOCART |
+| ```WW3/```                | Contains community wave modeling framework WW3. |
+| ```MOM6-interface/```     | Contains MOM6 ocean model component |
+| ```CICE-interface/```     | Contains CICE sea-ice model component including CICE6 and Icepack |
+| ```stochastic_physics/``` | Contains the stochastic physics source code. |
+| ```cmake/```              | Contains compile option files on various platforms. |
+| ```modulefiles/```        | Contains module files on various platforms. |
+| ```tests/```              | Regression and unit testing framework scripts. |
+| ```build.sh```            | Script to build the model executable. (also used by `tests/`) |
+
+To build UFS-GOCART, load the machine-specific `fv3` module file provided in the
+`modulefiles/` directory, then run `./build.sh`. E.g.:
+
+```
+module use modulefiles/hera.intel
+module load fv3
+./build.sh
+```
 
 # Disclaimer
 

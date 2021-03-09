@@ -1,11 +1,11 @@
 [submodule "FV3"]
   path = FV3
-	url = https://github.com/rmontuoro/fv3atm.git
-	branch = feature/gocart
+  url = https://github.com/rmontuoro/fv3atm
+  branch = feature/ufs_gocart
 [submodule "NEMS"]
   path = NEMS
-  url = https://github.com/NOAA-EMC/NEMS
-  branch = develop
+  url = https://github.com/rmontuoro/NEMS
+  branch = feature/ufs_gocart
 [submodule "FMS"]
   path = FMS
   url = https://github.com/NOAA-GFDL/FMS
@@ -18,7 +18,27 @@
   path = stochastic_physics
   url = https://github.com/noaa-psd/stochastic_physics
   branch = master
+[submodule "CMakeModules"]
+  path = CMakeModules
+  url = https://github.com/NOAA-EMC/CMakeModules
+  branch = develop
+[submodule "CMEPS"]
+  path = CMEPS-interface/CMEPS
+  url = https://github.com/NOAA-EMC/CMEPS.git
+  branch = emc/develop
+[submodule "MOM6"]
+  path = MOM6-interface/MOM6
+  url = https://github.com/NOAA-EMC/MOM6
+  branch = dev/emc
+[submodule "CICE"]
+  path = CICE-interface/CICE
+  url = https://github.com/NOAA-EMC/CICE
+  branch = emc/develop
+[submodule "DATM"]
+  path = DATM
+  url = https://github.com/NOAA-EMC/NEMSdatm
+  branch = develop
 [submodule "GOCART"]
-	path = GOCART
-	url = https://github.com/GEOS-ESM/GOCART.git
-	branch = feature/ufs
+  path = GOCART
+  url = https://github.com/GEOS-ESM/GOCART
+  branch = feature/ufs
