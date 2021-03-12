@@ -55,6 +55,6 @@ module load gftl-shared
 module load pflogger
 module load pfunit
 module load yafyaml
-module load mapl
+module load mapl/develop
 
 module load intelpython/3.6.8
